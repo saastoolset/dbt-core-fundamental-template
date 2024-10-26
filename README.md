@@ -2,8 +2,6 @@
 
 dbt-core Fundamentals template in PostgreSQL and podman
 
-# `dbt` Tutorial
-
 [![Generic badge](https://img.shields.io/badge/dbt-1.8.8-blue.svg)](https://docs.getdbt.com/dbt-cli/cli-overview)
 [![Generic badge](https://img.shields.io/badge/PostgreSQL-16-blue.svg)](https://www.postgresql.org/)
 [![Generic badge](https://img.shields.io/badge/Python-3.11.10-blue.svg)](https://www.python.org/)
@@ -26,13 +24,13 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
 ### Create repository
 1. Create a new GitHub repository
 
-- Find our Github template repository [dbt-core-fundamental-template](https://github.com/saastoolset/dbt-core-fundamental-template)
+- Find our Github template repository [dbt-fundamental-template](https://github.com/saastoolset/dbt-fundamental-template)
 - Click the big green 'Use this template' button and 'Create a new repository'.
-- Create a new GitHub repository named **dbt-core-fundamental-ex1**.
+- Create a new GitHub repository named **dbt-fund-ex1**.
 
 ![Click use template](.github/static/use-template.gif)
 
-2. Select Public so the repository can be shared with others. You can always make it private later.
+1. Select Public so the repository can be shared with others. You can always make it private later.
 2. Leave the default values for all other settings.
 3. Click Create repository.
 4. Save the commands from "…or create a new repository on the command line" to use later in Commit your changes.
@@ -45,7 +43,7 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
   - For conda in Windows, open conda prompt terminal in system administrador priviledge
 
     ```
-    (base) C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-core-qs-ex1\bin
+    (base) C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1\bin
     (base) C:> conda env create -n dbt -python 3.11.10
     (base) C:> conda activate dbt
     ```
@@ -61,7 +59,7 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
   . use admin/Password as connection
 
   ```
-  (dbt) C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-core-qs-ex1\bin
+  (dbt) C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1\bin
   (dbt) C:> db-start-pg.bat
   ``` 
 
@@ -71,8 +69,8 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
 - Init project in repository home directory
   Initiate the jaffle_shop project using the init command:
 
-```python
-C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-core-qs-ex1
+```
+C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1
 C:> dbt init jaffle_shop
 ```
 
@@ -92,8 +90,8 @@ jaffle_shop:
       threads: 1
       host: localhost
       port: 5432
-      user: "docker"
-      pass: "docker"
+      user: "admin"
+      pass: "Passw0rd"
       dbname: raw
       schema: dev
     prod:
@@ -101,8 +99,8 @@ jaffle_shop:
       threads: 1
       host: localhost
       port: 5432
-      user: "docker"
-      pass: "docker"
+      user: "admin"
+      pass: "Passw0rd"
       dbname: raw
       schema: analytics
   target: dev
