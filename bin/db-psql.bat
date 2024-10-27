@@ -1,9 +1,9 @@
 @echo off
 
-Echo Exec %1 ...
+Echo Exec %1 -- %2 ...
 Echo .
-podman exec -it db psql -d postgres -U admin  -f /tmp/%1
+podman exec -it db psql -d %1 -U admin  -f /tmp/%2
 Echo .
-Echo End exec %1
+Echo End exec %1 -- %2 
 
 @echo on
