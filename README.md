@@ -17,7 +17,44 @@ dbt-core Fundamentals template in PostgreSQL and podman
 
 In this tutorial, for the purpose of `dbt-core` exercises, I made some modifications to the `profiles.yml` file to use the local `PostgreSQL` repository.
 
-# Contents
+- [`dbt-core` Fundamentals Tutorial](#dbt-core-fundamentals-tutorial)
+  - [Preparation](#preparation)
+    - [Create repository](#create-repository)
+    - [Create venv](#create-venv)
+    - [Install `dbt-core`](#install-dbt-core)
+    - [Start database](#start-database)
+    - [Project Set Up](#project-set-up)
+    - [dbt command brief](#dbt-command-brief)
+  - [Models](#models)
+    - [Overview](#overview)
+    - [Modularity](#modularity)
+    - [Naming Conventions](#naming-conventions)
+    - [Project Reorganization](#project-reorganization)
+    - [Exercise](#exercise)
+    - [Summary](#summary)
+  - [Data Sources](#data-sources)
+    - [Overview](#overview-1)
+    - [Configuring sources](#configuring-sources)
+    - [Source function](#source-function)
+    - [Source freshness](#source-freshness)
+    - [Exercise](#exercise-1)
+    - [Summary](#summary-1)
+  - [Tests](#tests)
+    - [Overview](#overview-2)
+    - [dbt test function](#dbt-test-function)
+    - [dbt test command](#dbt-test-command)
+    - [Exercise](#exercise-2)
+    - [Summary](#summary-2)
+  - [Documentation](#documentation)
+    - [Overview](#overview-3)
+    - [documentation and doc blocks](#documentation-and-doc-blocks)
+    - [Generating and viewing documentation](#generating-and-viewing-documentation)
+    - [Exercise](#exercise-3)
+    - [Summary](#summary-3)
+  - [Deployment](#deployment)
+    - [Overview](#overview-4)
+    - [dbt-cloud](#dbt-cloud)
+    - [dbt-core](#dbt-core)
 
 ## Preparation
 
@@ -63,7 +100,7 @@ Skip this step if already installed dbt
 ### Start database
 
 - Start up db and pgadmin
-  . use admin/Password as connection
+  . use admin/Passw0rd as connection
 
   ```
   (dbt) C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1
@@ -118,7 +155,8 @@ C:> dbt debug
 ```
 
 - Load sample data
- We should copy this data from the `db/seeds` directory.
+  
+  We should copy this data from the `db/seeds` directory.
 
   - Edit `dbt_project.yml`
   Now we should create the `dbt_project.yml` file on the `jaffle_shop` directory. Append following config:
@@ -198,6 +236,8 @@ dbt compile --profiles--dir .
 That command will save the compiled queries on `target/compiled/PROJECT_NAME/models` directory
 
 ## Models
+
+### Overview
 
 - Models are .sql files that live in the models folder.
 - After constructing a model, dbt run in the command line will actually materialize the models into the data warehouse. The default materialization is a view.
@@ -496,6 +536,8 @@ Changes in `dbt_project.yml`:
 
 ## Data Sources
 
+### Overview
+
 - Sources represent the raw data that is loaded into the data warehouse.
 - Function to support source macro
   - Multiple tables from a single source can be configured in one place.
@@ -611,6 +653,8 @@ sources:
 - visualize the raw tables in the lineage on dbt Cloud UI
 
 ## Tests
+
+### Overview
 
 The tests are data validations that are performed after the data is loaded to the warehouse.
 
