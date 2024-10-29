@@ -20,8 +20,7 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
 - [`dbt-core` Fundamentals Tutorial](#dbt-core-fundamentals-tutorial)
   - [Preparation](#preparation)
     - [Create repository](#create-repository)
-    - [Create venv](#create-venv)
-    - [Install `dbt-core`](#install-dbt-core)
+    - [Create venv with dbt](#create-venv-with-dbt)
     - [Start database](#start-database)
     - [Project Set Up](#project-set-up)
     - [dbt command brief](#dbt-command-brief)
@@ -74,27 +73,17 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
 4. Save the commands from "…or create a new repository on the command line" to use later in Commit your changes.
 5. Install and setup envrionment
 
-### Create venv
+### Create venv with dbt
 
 Skip this step if already create dbt venv
 
 - Create python virtual env for dbt
   - For venv and and docker, using the [installation instructions](https://docs.getdbt.com/docs/core/installation-overview) for your operating system.
-  - For conda in Windows, open conda prompt terminal in system administrador priviledge
-
-    ```
-    (base) C:> conda env create -n dbt -python 3.11.10
-    (base) C:> conda activate dbt
-    ```
-
-### Install `dbt-core`
-
-Skip this step if already installed dbt
-
-- Install dbt Core
+  - For conda in Windows, open conda prompt terminal in ***system administrador priviledge***
 
   ```command
-        (dbt) C:> conda install dbt-core dbt-postgres
+  conda create -n dbt dbt-core dbt-postgres
+  conda activate dbt
   ```
 
 ### Start database
@@ -102,9 +91,9 @@ Skip this step if already installed dbt
 - Start up db and pgadmin
   . use admin/Passw0rd as connection
 
-  ```
-  (dbt) C:> cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1
-  (dbt) C:> bin\db-start-pg.bat
+  ```command
+  cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1
+  bin\db-start-pg.bat
   ```
 
 ### Project Set Up
@@ -112,8 +101,8 @@ Skip this step if already installed dbt
 - Init project in repository home directory
   Initiate the jaffle_shop project using the init command:
 
-```
-C:> dbt init jaffle_shop
+```command
+dbt init jaffle_shop
 ```
 
 - Connect to PostgreSQL
@@ -150,8 +139,8 @@ jaffle_shop:
 - Test connection config
 
 ```
-C:> cd jaffle_shop
-C:> dbt debug
+cd jaffle_shop
+dbt debug
 ```
 
 - Load sample data
@@ -169,15 +158,15 @@ C:> dbt debug
 
   - copy seeds data
 
-  ```
-  C:> copy ..\db\seeds\*.csv seeds
-  C:> dbt seed  
+  ```command
+  copy ..\db\seeds\*.csv seeds
+  dbt seed  
   ```
 
   - create source table
 
-  ```
-  C:> ..\bin\db-psql raw bin/init_src.sql
+  ```command
+  ..\bin\db-psql raw bin/init_src.sql
   ```
 
 - Verfiy result in database client
@@ -197,7 +186,7 @@ To meet train course scenario, copy to source table, verify following tables:
 
 To run `dbt`, we just execute, inside `jaffle_shop` directory
 
-```
+```command
 dbt run --profiles-dir .
 ```
 
@@ -205,31 +194,31 @@ This will run all the modles defined on the `models` directory.
 
 In case you only want to run 1 model, you can execute
 
-```
+```command
 dbt run -m FILE_NAME --profiles-dir .
 ```
 
 In case you only want to run 1 model and all the other ones that depends on it, you can execute
 
-```
+```command
 dbt run -m FILE_NAME+ --profiles-dir .
 ```
 
 In case you only want to run 1 model and all the previous ones, you can execute
 
-```
+```command
 dbt run -m +FILE_NAME --profiles-dir .
 ```
 
 In case you only want to run 1 model, all the previous ones and all the dependencies, you can execute
 
-```
+```command
 dbt run -m +FILE_NAME+ --profiles-dir .
 ```
 
 To compile the queries, we can run:
 
-```
+```command
 dbt compile --profiles--dir .
 ```
 
