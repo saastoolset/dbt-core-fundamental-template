@@ -6,10 +6,10 @@ create schema stripe;
 
 -- create table as SELECT
 create table jaffle_shop.customers as 
-select * from dev_seeds.customers;
+select * from jaffle_shop_seeds.customers;
 
 create table jaffle_shop.orders as  
-select * from dev_seeds.orders;
+select * from jaffle_shop_seeds.orders;
 
 create table stripe.payments as  
-select * from dev_seeds.payments;
+select * from jaffle_shop_seeds.payments;

@@ -92,7 +92,7 @@ Skip this step if already create dbt venv
   . use admin/Passw0rd as connection
 
   ```command
-  cd C:\Proj\CUB-EDW\50-GIT\dbt-fund-ex1
+  cd C:\Proj\myProj\50-GIT\dbt-fund-ex1
   bin\db-start-pg.bat
   ```
 
@@ -107,8 +107,8 @@ dbt init jaffle_shop
 
 - Connect to PostgreSQL
 
-- Update `profiles.yml`
-Now we should create the `profiles.yml` file on the `C:\Users\YourID\.dbt` directory. The file should look like this:
+  - Update `profiles.yml`
+  Now we should create the `profiles.yml` file on the `C:\Users\YourID\.dbt` directory. The file should look like this:
 
 ```YAML
 config:
@@ -170,11 +170,11 @@ dbt debug
   ```
 
 - Verfiy result in database client
-This command will spin and will create the `dbt_seeds` schema, and create and insert the `.csv` files to the following tables:
+This command will spin and will create the `jaffle_shop_seeds` schema, and create and insert the `.csv` files to the following tables:
 
-- `dbt_seeds.customers`
-- `dbt_seeds.orders`
-- `dbt_seeds.payments`
+- `jaffle_shop_seeds.customers`
+- `jaffle_shop_seeds.orders`
+- `jaffle_shop_seeds.payments`
 
 To meet train course scenario, copy to source table, verify following tables:
 
@@ -431,15 +431,15 @@ That command will save the compiled queries on `target/compiled/PROJECT_NAME/mod
   ```SQL
   select
       id as payment_id,
-      orderid as order_id,
-      paymentmethod as payment_method,
-      status,
+      order_id as order_id,
+      payment_method as payment_method,
+      'success' as status,
 
       -- amount is stored in cents, convert it to dollars
-      amount / 100 as amount,
-      created as created_at
+      amount / 100 as amount
+      {# created as created_at #}
 
-  from stripe.payment 
+  from stripe.payments 
   ```
 
   ***marts/finance/fct_orders.sql***
@@ -475,12 +475,11 @@ That command will save the compiled queries on `target/compiled/PROJECT_NAME/mod
   )
 
   select * from final
-  marts/marketing/dim_customers.sql 
   ```
 
   *Note: This is different from the original dim_customers.sql - you may refactor fct_orders in the process.
 
-***dim_customers.sql***
+***marts/marketing/dim_customers.sql ***
 
 ```SQL
 with customers as (
