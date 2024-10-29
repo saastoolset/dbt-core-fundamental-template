@@ -516,11 +516,19 @@ select * from final
 
 ### Summary
 
-Changes in `dbt_project.yml`:
+- Lineage with ***Power User for dbt***
 
-- Here you can choose the materialization of each dataproduct (table, view, incremental). The default one is view. The reference schemas also required review as needs.
--
-- Those option can be overriden on each `.sql` file.
+  - Model lineage
+    ![Model lineage](.github/static/mdl_lineage.png)
+
+
+  - Column lineage
+    ![Column lineage](.github/static/col_lineage.png)
+
+- Changes in `dbt_project.yml`:
+
+  - Here you can choose the materialization of each dataproduct (table, view, incremental). The default one is view. The reference schemas also required review as needs.-
+  - Those option can be overriden on each `.sql` file.
 
 ## Data Sources
 
@@ -566,6 +574,7 @@ Changes in `dbt_project.yml`:
         name: customers
         name: orders  
  ```
+
 - Refactor staging models
     Refactor stg_jaffle_shop__customers.sql using the source function.
 
