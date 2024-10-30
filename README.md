@@ -739,15 +739,15 @@ The tests are data validations that are performed after the data is loaded to th
               tests:
                 - unique
                 - not_null
-        - name: status
-          tests:
-            - accepted_values:
-                values:
-                  - completed
-                  - shipped
-                  - returned
-                  - return_pending
-                  - placed
+            - name: status
+              tests:
+              - accepted_values:
+                  values:
+                    - completed
+                    - shipped
+                    - returned
+                    - return_pending
+                    - placed
   ```
 
 - Singular Tests
@@ -760,10 +760,10 @@ The tests are data validations that are performed after the data is loaded to th
   -- Therefore return records where this isn't true to make the test fail.
   select
     order_id,
-          sum(amount)as total_amount
+    sum(amount) as total_amount
   from {{ ref('stg_stripe__payments') }}
   group by 1
-  having not (total_amount < 0)
+  having not (sum(amount)  < 0)
 
   ```
 
@@ -774,36 +774,38 @@ The tests are data validations that are performed after the data is loaded to th
 
 ***models/staging/jaffle_shop/stg_jaffle_shop.yml***
 
-```yaml
-version:2
+  ```yaml
+  version: 2
 
-models:
-  name: stg_jaffle_shop__customers
-    columns:
-      name: customer_id
-        tests:
-          - unique
-          - not_null
-  name: stg_jaffle_shop__orders
-    columns:
-      name: order_id
-        tests:
-         - unique
-         - not_null
-      - name: status
-        tests:
-          accepted_values:
-              values:
-                - completed
-                - shipped
-                - returned
-                - return_pending
-      name: customer_id
-      tests:
-        - relationships:
-              to: ref('stg_jaffle_shop__customers')
-              field: customer_id
-```
+  models:
+    - name: stg_jaffle_shop__customers
+      columns: 
+        - name: customer_id
+          tests:
+            - unique
+            - not_null
+        - name: stg_jaffle_shop__orders
+          columns:
+            - name: order_id
+              tests:
+                - unique
+                - not_null
+            - name: status
+              tests:
+              - accepted_values:
+                  values:
+                    - completed
+                    - shipped
+                    - returned
+                    - return_pending
+                    - placed
+            - name: customer_id
+              tests:
+              - relationships:
+                  field: id
+                  to: ref('customers')
+
+  ```
 
 
 ### Summary
