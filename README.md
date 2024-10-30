@@ -19,6 +19,7 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
 
 - [`dbt-core` Fundamentals Tutorial](#dbt-core-fundamentals-tutorial)
   - [Preparation](#preparation)
+    - [Prerequisites](#prerequisites)
     - [Create repository](#create-repository)
     - [Create venv with dbt](#create-venv-with-dbt)
     - [Start database](#start-database)
@@ -56,6 +57,23 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
     - [dbt-core](#dbt-core)
 
 ## Preparation
+
+### Prerequisites
+
+- Python/conda
+- Python package
+  - dbt-core
+  - dbt-postgres
+  - dbt-loom
+- Podman desktop
+- DBeaver
+- git client
+- Visual Code
+- Visual Code Addon
+  - Better Jinja
+  - YAML
+  - [Power User for dbt](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user#autocomplete)
+
 
 ### Create repository
 
@@ -529,6 +547,7 @@ select * from final
 
   - Here you can choose the materialization of each dataproduct (table, view, incremental). The default one is view. The reference schemas also required review as needs.-
   - Those option can be overriden on each `.sql` file.
+
 
 ## Data Sources
 
