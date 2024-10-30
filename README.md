@@ -582,7 +582,7 @@ select * from final
 
   ***models/staging/jaffle_shop/src_jaffle_shop.yml***
 
- ```yaml
+  ```yaml
   version: 2
 
   sources:
@@ -590,51 +590,39 @@ select * from final
       database: raw
       schema: jaffle_shop
       tables:
-        name: customers
-        name: orders
+        - name: customers
+        - name: orders
 
- ```
+  ```
 
 - Refactor staging models
-    Refactor stg_jaffle_shop__customers.sql using the source function.
+  - Refactor stg_jaffle_shop__customers.sql using the source function.
 
-***models/staging/jaffle_shop/stg_jaffle_shop__customers.sql***
+  ***models/staging/jaffle_shop/stg_jaffle_shop__customers.sql***
 
-```yaml
-  select 
-      id as customer_id,
-      first_name,
-      last_name
-  from {{ source('jaffle_shop', 'customers') }}
-  Refactor stg_jaffle_shop__orders.sql using the source function.
-  models/staging/jaffle_shop/stg_jaffle_shop__orders.sql
+  ```sql
+    select 
+        id as customer_id,
+        first_name,
+        last_name
+    from {{ source('jaffle_shop', 'customers') }}
 
-  select
-      id as order_id,
-      user_id as customer_id,
-      order_date,
-      status
-  from {{ source('jaffle_shop', 'orders') }}
+  ```
 
-```
+  - Refactor stg_jaffle_shop__orders.sql using the source function.
+    
+  ***models/staging/jaffle_shop/stg_jaffle_shop__orders.sql***
 
-- You can configure your ***src_stripe.yml*** file as below:
+  ```sql
+    select
+        id as order_id,
+        user_id as customer_id,
+        order_date,
+        status
+    from {{ source('jaffle_shop', 'orders') }}
 
-```yaml
-version: 2
+  ```
 
-sources:
-  - name: stripe
-    database: raw
-    schema: stripe
-    tables:
-      - name: payment
-        loaded_at_field: _batched_at
-        freshness:
-          warn_after: {count: 12, period: hour}
-          error_after: {count: 24, period: hour}
-
-```
 
 - Ex2.2 check your work
 
@@ -648,20 +636,44 @@ sources:
       database: raw
       schema: stripe
       tables:
-        - name: payment
-  models/staging/stripe/stg_payments.sql
+        - name: payments
+  ```
 
+  ***models/staging/stripe/stg_stripe__payments.sql***
+  
+  ```sql
   select
       id as payment_id,
-      orderid as order_id,
-      paymentmethod as payment_method,
-      status,
+      order_id as order_id,
+      payment_method as payment_method,
+      'success' as status,
       -- amount is stored in cents, convert it to dollars
-      amount / 100 as amount,
-      created as created_at
-  from {{ source('stripe', 'payment') }}
+      amount / 100 as amount
+      {# created as created_at #}
+  from {{ source('stripe', 'payments') }}
 
   ```
+
+- Ex2.3 freshness test, optional
+
+  - You can configure your ***src_stripe.yml*** file as below:
+
+  ```yaml
+  version: 2
+
+  sources:
+    - name: stripe
+      database: raw
+      schema: stripe
+      tables:
+        - name: payments
+          loaded_at_field: _batched_at
+          freshness:
+            warn_after: {count: 12, period: hour}
+            error_after: {count: 24, period: hour}
+
+  ```
+
 
 ### Summary
 
