@@ -866,6 +866,123 @@ This command will create a `index.html` file on `target` directory.
 
 ### Exercise
 
+- Ex4.1 Add description
+  - ***models/staging/jaffle_shop/stg_jaffle_shop.yml***
+
+  ```yaml
+  version: 2
+
+  models:
+    - name: stg_jaffle_shop__customers
+      description: Staged customer data from our jaffle shop app.
+      columns: 
+        - name: customer_id
+          description: The primary key for customers.
+          tests:
+            - unique
+            - not_null
+
+    - name: stg_jaffle_shop__orders
+      description: Staged order data from our jaffle shop app.
+      columns: 
+        - name: order_id
+          description: Primary key for orders.
+          tests:
+            - unique
+            - not_null
+        - name: status
+          description: '{{ doc("order_status") }}'
+          tests:
+            - accepted_values:
+                values:
+                  - completed
+                  - shipped
+                  - returned
+                  - placed
+                  - return_pending
+        - name: customer_id
+          description: Foreign key to stg_customers.customer_id.
+          tests:
+            - relationships:
+                to: ref('stg_jaffle_shop__customers')
+                field: customer_id
+
+  ```
+
+  - Generate the documentation and run by running 
+  
+  ```command
+    dbt docs generate
+  ```
+
+  ```command
+    dbt docs serve
+  ```
+
+- Ex4.2 doc blocks
+***models/staging/jaffle_shop/jaffle_shop.md***
+
+```markdown
+{% docs order_status %}
+	
+One of the following values: 
+
+| status         | definition                                       |
+|----------------|--------------------------------------------------|
+| placed         | Order placed, not yet shipped                    |
+| shipped        | Order has been shipped, not yet been delivered   |
+| completed      | Order has been received by customers             |
+| return pending | Customer indicated they want to return this item |
+| returned       | Item has been returned                           |
+
+{% enddocs %}
+
+```
+
+- Ex4.3 Create a reference to a doc block
+
+
+***models/staging/jaffle_shop/stg_jaffle_shop.yml***
+
+```yaml
+version: 2
+
+models:
+  - name: stg_customers
+    description: Staged customer data from our jaffle shop app.
+    columns: 
+      - name: customer_id
+        description: The primary key for customers.
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_orders
+    description: Staged order data from our jaffle shop app.
+    columns: 
+      - name: order_id
+        description: Primary key for orders.
+        tests:
+          - unique
+          - not_null
+      - name: status
+        description: "{{ doc('order_status') }}"
+        tests:
+          - accepted_values:
+              values:
+                - completed
+                - shipped
+                - returned
+                - placed
+                - return_pending
+      - name: customer_id
+        description: Foreign key to stg_customers.customer_id.
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+```
 
 
 ### Summary
@@ -882,6 +999,8 @@ $ dbt docs generate --profiles-dir .
 ```
 
 This will generate the docs webpage available on `localhost:8888`, where we can see the all the define documentation, the dependencies, the lineage graph, and everything we need to make all the data model much more clear.
+
+
 
 ## Deployment
 
