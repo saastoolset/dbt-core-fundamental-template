@@ -7,7 +7,7 @@ dbt-core Fundamentals template in PostgreSQL and podman
 [![Generic badge](https://img.shields.io/badge/Python-3.11.10-blue.svg)](https://www.python.org/)
 [![Generic badge](https://img.shields.io/badge/Podman-5.0.2-blue.svg)](https://www.docker.com/)
 
-  This `dbt-core` quickstart taken from the various [dbt Developer Hub](https://docs.getdbt.com/guides) and [dbt courses](https://courses.getdbt.com/collections), using `PostgreSQL` as the data warehouse. There you are going to find the following  course:
+  This `dbt-core` fundamentals tutorial taken from the various [dbt Developer Hub](https://docs.getdbt.com/guides) and [dbt courses](https://courses.getdbt.com/collections), using `PostgreSQL` as the data warehouse. There you are going to find the following  course:
 
 - [dbt Fundamentals](https://courses.getdbt.com/courses/fundamentals)
 - [Jinja, Macros, Packages](https://courses.getdbt.com/courses/jinja-macros-packages)
